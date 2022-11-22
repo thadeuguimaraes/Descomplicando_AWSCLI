@@ -1,0 +1,13 @@
+#Scripts ACM
+#https://docs.aws.amazon.com/cli/latest/reference/acm/index.html
+
+##AULA 01 ACM
+#Request Certificate
+aws acm request-certificate --domain-name *.automacaoawscli.com.br --validation-method DNS
+echo $certificate_arn
+
+##AULA 02 ACM
+certificate_arn=$(aws acm request-certificate --domain-name *.automacaoawscli.com.br --query 'CertificateArn' --output json --validation-method DNS | tr -d \")
+echo $certificate_arn
+sleep 5
+aws acm describe-certificate --certificate-arn $certificate_arn --query 'Certificate.DomainValidationOptions[0].ResourceRecord' --output json

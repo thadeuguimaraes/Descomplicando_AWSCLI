@@ -1,0 +1,17 @@
+#Script RUN
+aws ec2 run-instances --image-id ami-009d6802948d06e52 --instance-type t2.micro --key-name cursoautomacaokey --security-group-ids sg-62a28a1a --subnet-id subnet-c2bb07e8 --region us-east-1 --count 2 --tag-specifications 'ResourceType=instance,Tags=[{Key=grupo,Value=automacao-cli}]'
+
+#Script Filter e Query
+
+aws ec2 describe-instances --filters "Name=tag:ambiente,Values=prod" --query "Reservations[*].Instances[*].[InstanceId,ImageId,Tags[?Key=='grupo'].Value]"
+
+#Script Stop Instances
+
+instance_ids=$(aws ec2 describe-instances --filters "Name=tag:ambiente,Values=prod" --query "Reservations[*].Instances[*].[InstanceId]" | tr -d ] | tr -d [ | tr -d , | tr -d '"')
+aws ec2 stop-instances --instance-ids $instance_ids --output table
+
+#Script Start
+aws ec2 start-instances --instance-ids $instance_ids --output table
+
+#Script terminate
+aws ec2 terminate-instances --instance-ids $instance_ids --output table

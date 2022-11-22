@@ -1,0 +1,11 @@
+#Scripts SQS
+#Fonte: https://docs.aws.amazon.com/cli/latest/reference/sqs/
+
+#Send Message
+queue_url="https://sqs.us-east-1.amazonaws.com/744671105050/curso-automacao-aws"
+aws sqs send-message --queue-url "https://sqs.us-east-1.amazonaws.com/744671105050/curso-automacao-aws" --message-body "Instancias para iniciar"
+aws sqs send-message --queue-url "https://sqs.us-east-1.amazonaws.com/744671105050/curso-automacao-aws" --message-body "Instancias para iniciar 2" --message-attributes file://send-message.json
+
+#Receive Message
+aws sqs receive-message --message-attribute-names All --queue-url "https://sqs.us-east-1.amazonaws.com/744671105050/curso-automacao-aws"
+aws sqs receive-message --message-attribute-names Instancias_Para_Parar --query 'Messages[0].MessageAttributes.Instancias_Para_Parar.StringValue' --queue-url "https://sqs.us-east-1.amazonaws.com/744671105050/curso-automacao-aws"

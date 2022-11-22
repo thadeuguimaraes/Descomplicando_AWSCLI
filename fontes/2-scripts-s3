@@ -1,0 +1,24 @@
+#Scripts S3
+#Fonte: https://docs.aws.amazon.com/cli/latest/reference/s3/
+
+#ls 
+#Listagem dos buckets
+aws s3 ls 
+#Listagem dos arquivos do bucket
+aws s3 ls s3://curso-automacao
+
+#presign
+#Default 3600 segundos
+aws s3 presign s3://curso-automacao/arquivo1.txt
+aws s3 presign s3://curso-automacao/arquivo1.txt --expires-in 10
+
+#CP
+aws s3 cp /tmp/backup/arquivo1.txt s3://curso-automacao/
+aws s3 cp s3://curso-automacao/arquivo2.txt /tmp/backup/
+aws s3 cp /tmp/backup/arquivo1.txt s3://curso-automacao/ --storage-class STANDARD_IA --dryrun
+
+#SYNC
+aws s3 sync /tmp/backup s3://curso-automacao --storage-class STANDARD_IA --dryrun
+
+
+

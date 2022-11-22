@@ -1,0 +1,11 @@
+#Scripts Lambda
+#https://docs.aws.amazon.com/cli/latest/reference/lambda/
+
+#Deploy
+aws lambda update-function-code --function-name "automacao-aws-cli" --s3-bucket "lambda-automacao-aws-cli" --s3-key "src-$VERSAO.zip"
+
+
+
+#Exec
+aws lambda invoke --function-name automacao-aws-cli --invocation-type RequestResponse --payload '{"key1":"Primeiro callback", "key2": "Segundo callback"}' out.txt
+aws lambda invoke --function-name automacao-aws-cli --invocation-type Event --payload '{"key1":"Primeiro callback", "key2": "Segundo callback"}' out.txt

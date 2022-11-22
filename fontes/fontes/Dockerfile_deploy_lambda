@@ -1,0 +1,34 @@
+FROM centos
+
+#Instalando dependencias
+RUN yum update -y
+RUN yum install curl -y
+RUN yum install unzip -y
+RUN yum install zip -y
+
+#Instalando AWS CLI
+RUN curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
+RUN unzip awscli-bundle.zip
+RUN python awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
+
+#Instalando Node
+
+RUN curl -sL https://rpm.nodesource.com/setup_8.x | bash -
+RUN yum install -y nodejs
+
+# Diretório onde ficará os fontes
+WORKDIR /usr/src/lambda
+
+ARG versao
+
+# COPIANDO ARQUIVOS DO PROJETO
+COPY fontes/src ./src
+COPY fontes/package.json ./
+COPY fontes/deploy-lambda-from-container.sh ./
+
+
+RUN sh deploy-lambda-from-container.sh $versao
+COPY fontes/deploy-lambda-from-container-entrypoint.sh ./
+
+WORKDIR /usr/src/lambda/src-$versao
+ENTRYPOINT ["/usr/src/lambda/deploy-lambda-from-container-entrypoint.sh"]

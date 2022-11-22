@@ -1,0 +1,14 @@
+{
+  "name": "curso-aws-cli",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "test.js"
+  },
+  "author": "Henrylle Maia",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^2.0.1"
+  }
+}
